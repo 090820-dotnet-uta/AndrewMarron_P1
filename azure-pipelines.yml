@@ -20,7 +20,15 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-    
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'P1Sonar'
+    organization: 'afesafesrresgtrhtyhtytnytjntyerreg'
+    scannerMode: 'MSBuild'
+    projectKey: 'amarron314_RevatureP1'
+    projectName: 'RevatureP1'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
