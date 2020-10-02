@@ -5,8 +5,7 @@
 <div class="text-center">
     <div class="borderdiv">
         <h1 class="display-4">Login</h1>
-        @*@if (ViewData["warn"] == "credinvalid")*@
-        @if (ViewData["credinvalid"] == "true")
+        @if (ViewData["warn"] == "credinvalid")
         {
             <p class="warningmessage">Username or Password not not found; try again or register a new account</p>
         }

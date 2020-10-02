@@ -20,13 +20,13 @@ namespace RevatureP1.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string credinvalid = "false")
+        public IActionResult Index(string warn = "")
         {
             //System.Diagnostics.Debug.WriteLine(_cache.Get("TestCacheVar"));
             //System.Diagnostics.Debug.WriteLine(credinvalid);
-            if (credinvalid == "true")
+            if (warn == "credinvalid")
             {
-                ViewData["credinvalid"] = "true";
+                ViewData["warn"] = "credinvalid";
             }
             return View();
         }
@@ -59,8 +59,7 @@ namespace RevatureP1.Controllers
             //ModelState.AddModelError("<usernamein>", "<message>");
             //return View("Index");
 
-            //return Redirect("/Login?warn=credinvalid");
-            return Redirect("/Login?credinvalid=true");
+            return Redirect("/Login?warn=credinvalid");
         }
 
 
