@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="text-center">
+    <div class="borderdiv">
+        <h1 class="display-4">Login</h1>
+        @*@if (ViewData["warn"] == "credinvalid")*@
+        @if (ViewData["credinvalid"] == "true")
+        {
+            <p class="warningmessage">Username or Password not not found; try again or register a new account</p>
+        }
+        <p>Log in to Continue</p>
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center container">
+                <form method="post" asp-action="Login">
+                    <input type="text" id="usernamein" name="usernamein" placeholder="User Name" class="form-control"><br>
+                    <input type="password" id="passwordin" name="passwordin" placeholder="Password" class="form-control"><br>
+                    <input type="submit" value="Login" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="borderdiv">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center container">
+                <form method="post" asp-action="GoToRegister">
+                    <p>Or register as a new user</p>
+                    <input type="submit" value="Ceate Account" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
