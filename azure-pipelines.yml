@@ -28,6 +28,8 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'amarron314_RevatureP1'
     projectName: 'RevatureP1'
+    extraProperties: sonar.exclusions=**/obj/**,**/*.dll
+
 
 - task: DotNetCoreCLI@2
   inputs:
