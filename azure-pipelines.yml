@@ -20,6 +20,11 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: './RevatureP1.csproj'
 
 - task: VSBuild@1
   displayName: 'customName'
