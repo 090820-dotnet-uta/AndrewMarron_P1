@@ -45,3 +45,11 @@ steps:
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration)  --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(15a0b971-42f8-4b60-8743-06f43ed23ccf)'
+    appType: 'webApp'
+    appName: 'RevatureP1AndrewMarron'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
