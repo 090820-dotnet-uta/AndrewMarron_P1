@@ -24,6 +24,8 @@ namespace RevatureP1.Controllers
         {
             //System.Diagnostics.Debug.WriteLine(_cache.Get("TestCacheVar"));
             //System.Diagnostics.Debug.WriteLine(credinvalid);
+            var foundCustomers = from thisTableItem in _context.Customers
+                                 select thisTableItem;
             if (warn == "credinvalid")
             {
                 ViewData["warn"] = "credinvalid";
