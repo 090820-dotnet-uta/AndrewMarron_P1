@@ -26,6 +26,8 @@ namespace RevatureP1.Controllers
             //System.Diagnostics.Debug.WriteLine(credinvalid);
             var foundCustomers = from thisTableItem in _context.Customers
                                  select thisTableItem;
+
+            ViewData["testtext"] = foundCustomers.Count();
             if (warn == "credinvalid")
             {
                 ViewData["warn"] = "credinvalid";
