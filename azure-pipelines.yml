@@ -32,7 +32,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: './RevatureP1.csproj'
+    projects: '**/RevatureP1.csproj'
 
 # - task: VSBuild@1
 #   displayName: 'customName'
