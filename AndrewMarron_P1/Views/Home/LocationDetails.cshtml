@@ -1,0 +1,57 @@
+﻿@model IEnumerable<RevatureP1.Models.StockItemViewModel>
+
+@{ ViewData["Title"] = "Location Details"; }
+
+<h1>Items in stock</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+                @*@Html.DisplayNameFor(model => model.ProductName)*@
+            </th>
+            <th>
+                Number In Stock
+            </th>
+            <th>
+                Sales
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaleString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceString)
+            </td>
+            <td>
+                @{ 
+                    Dictionary<string, string> paramPass = new Dictionary<string, string>();
+                    paramPass.Add("locid", $"{ item.LocationId}");
+                    paramPass.Add("prodid", $"{ item.ProductId}");
+                }
+                <a asp-action="ProductSelect" asp-all-route-data=@paramPass>Product Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn-primary" href="javascript:history.go(-1)">Back</a>

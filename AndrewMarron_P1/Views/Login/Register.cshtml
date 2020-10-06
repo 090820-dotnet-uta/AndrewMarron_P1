@@ -1,0 +1,55 @@
+﻿@model RevatureP1.Models.Customer
+
+@{ ViewData["Title"] = "Create"; }
+
+<div class="text-center">
+    <div class="borderdiv">
+        <h1>Register User</h1>
+        <div class="row">
+            @*<div class="col-md-4">*@
+            <div class="d-flex justify-content-center align-items-center container">
+                @if ((string)ViewData["warn"] == "duplicate")
+                {<p class="warningmessage">Registration incomplete; Username entered already exists</p>}
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="borderdiv">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center container">
+                <div>
+                    <p>Or log in as existing user</p>
+                    <a class="btn btn-primary" asp-area="" asp-action="Index">Go To Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,61 @@
+﻿@model RevatureP1.Models.StockItemViewModel
+
+@{ ViewData["Title"] = "Confirm Card Addition"; }
+
+<h1>Confirm Adding To Cart</h1>
+
+@if ((string)ViewData["warn"] == "toomuch")
+{<p class="warningmessage">Order Incomplete; You cannot order more items than are in stock</p>}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+                @*@Html.DisplayNameFor(model => model.ProductName)*@
+            </th>
+            <th>
+                Number In Stock
+            </th>
+            <th>
+                Sales
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.StockCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.SaleString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.PriceString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.DescriptionString)
+            </td>
+            <td>
+                <form method="post" asp-action="AddToCart">
+                    Order how many: <input type="number" id="countin" name="countin" min="1" , value="1" class="form-control" required><br>
+                    <input type="submit" value="Add To Cart" class="btn btn-primary">
+                </form>
+                @*@{ Dictionary<string, string> paramPass = new Dictionary<string, string>();
+                                        paramPass.Add("locid", $"{ item.LocationId}");
+                                        paramPass.Add("prodid", $"{ item.ProductId}"); }
+                    <a asp-action="ProductConfirm" asp-all-route-data=@paramPass>Add to Cart</a>*@
+            </td>
+        </tr>
+    </tbody>
+</table>
+<a class="btn btn-primary" href="javascript:history.go(-1)">Back</a>

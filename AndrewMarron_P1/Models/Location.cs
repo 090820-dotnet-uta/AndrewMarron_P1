@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace RevatureP1.Models
 {

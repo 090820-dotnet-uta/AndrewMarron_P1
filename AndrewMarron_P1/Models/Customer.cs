@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace RevatureP1.Models
@@ -17,9 +18,21 @@ namespace RevatureP1.Models
         private string password;
         private DateTime dateAdded;
         public int CustomerId { get => customerId; set => customerId = value; }
+
+        [StringLength(40, MinimumLength = 2)]
+        [Required]
         public string UserName { get => userName; set => userName = value; }
+
+        [StringLength(40, MinimumLength = 2)]
+        [Required]
         public string FirstName { get => firstName; set => firstName = value; }
+
+        [StringLength(40, MinimumLength = 2)]
+        [Required]
         public string LastName { get => lastName; set => lastName = value; }
+
+        [StringLength(40, MinimumLength = 2)]
+        [Required]
         public string Password { get => password; set => password = value; }
         public DateTime DateAdded { get => dateAdded; set => dateAdded = value; }
         public Customer() { }

@@ -24,10 +24,6 @@ namespace RevatureP1.Controllers
         {
             //System.Diagnostics.Debug.WriteLine(_cache.Get("TestCacheVar"));
             //System.Diagnostics.Debug.WriteLine(credinvalid);
-            var foundCustomers = from thisTableItem in _context.Customers
-                                 select thisTableItem;
-
-            ViewData["testtext"] = foundCustomers.Count();
             if (warn == "credinvalid")
             {
                 ViewData["warn"] = "credinvalid";
@@ -66,10 +62,66 @@ namespace RevatureP1.Controllers
             return Redirect("/Login?warn=credinvalid");
         }
 
+        //public IActionResult GoToRegister(string usernamein, string passwordin)
+        //{
+        //    return Redirect("/Register");
+        //}
 
-        public IActionResult GoToRegister(string usernamein, string passwordin)
+        public IActionResult Register(string warn = "")
         {
-            return Redirect("/Register");
+            if (warn == "duplicate")
+            {
+                ViewData["warn"] = "duplicate";
+            }
+            return View();
         }
+
+        // POST: NewCustomer/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("CustomerId,UserName,FirstName,LastName,Password,DateAdded")] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                Customer checkCust = UtilMethods.GetCustomerByUserName(customer.UserName, _context);
+                if (checkCust.UserName != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Customer with user name {customer.UserName} already exists");
+                    return Redirect("/Login/Register?warn=duplicate");
+                }
+                else
+                {
+                    customer.DateAdded = DateTime.Now;
+                    _context.Add(customer);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(customer);
+        }
+
+        //public IActionResult Register(string usernamein, string passwordin, string firstnamein, string lastnamein)
+        //{
+        //    ///<summary>
+        //    /// Registers a new customer
+        //    ///</summary>
+        //    Customer checkCust = UtilMethods.GetCustomerByUserName(usernamein, _context);
+        //    if (checkCust.UserName != null)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine($"Customer with user name {usernamein} already exists");
+        //        return Redirect("/Register?warn=duplicate");
+        //    }
+        //    else
+        //    {
+        //        Customer newCust = new Customer(usernamein, firstnamein, lastnamein, passwordin);
+        //        _context.Customers.Add(newCust);
+        //        _context.SaveChanges();
+        //        System.Diagnostics.Debug.WriteLine($"Customer account {usernamein} created");
+        //        _cache.Set("thisCustomer", newCust);
+        //    }
+        //    return Redirect("/");
+        //}
     }
 }

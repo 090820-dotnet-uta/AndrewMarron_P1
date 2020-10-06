@@ -1,0 +1,60 @@
+﻿@model IEnumerable<RevatureP1.Models.OrderItemViewModel>
+
+@{ ViewData["Title"] = "Cart"; }
+
+<h1>Order History for @ViewData["userName"]</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+                @*@Html.DisplayNameFor(model => model.ProductName)*@
+            </th>
+            <th>
+                Number In Cart
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th>
+                Ordering From
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.OrderCount)
+    </td>
+    <td>
+        $@Html.DisplayFor(modelItem => item.TotalPriceWhenOrdered)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LocationAddress)
+    </td>
+</tr>
+}
+    </tbody>
+</table>
+@{ if (Model.Count() == 0)
+    {<h3>Cart is empty</h3> } }
+<a class="btn btn-primary" href="javascript:history.go(-1)">Back</a>
+@{ if (Model.Count() > 0)
+    {
+    <br/>
+    <a class="btn btn-primary" asp-action="CheckoutCart">Checkout Cart</a>
+    <br/>
+    <a class="btn btn-primary" asp-action="ClearCart">Clear Cart</a>
+
+    }
+    }

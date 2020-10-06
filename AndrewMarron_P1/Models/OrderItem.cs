@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace RevatureP1.Models // A product orderd by a customer from a location
 {
@@ -20,13 +21,30 @@ namespace RevatureP1.Models // A product orderd by a customer from a location
         private Location thisLocation;
         private Product product;
         private Customer customer;
+
+        [Required]
         public int OrderItemId { get => orderItemId; set => orderItemId = value; }
+
+        [Required]
         public int CustomerId { get => customerId; set => customerId = value; }
+
+        [Required]
         public int LocationId { get => locationId; set => locationId = value; }
+
+        [Required]
         public int ProductId { get => productId; set => productId = value; }
+
+        [Range(0, 999999)]
+        [Required]
         public int OrderCount { get => orderCount; set => orderCount = value; }
+
+        [Range(0, 999999)]
+        [Required]
         public double TotalPriceWhenOrdered { get => totalPriceWhenOrdered; set => totalPriceWhenOrdered = value; }
         public DateTime DateOrdered { get => dateOrdered; set => dateOrdered = value; }
+
+        [Required]
+        [StringLength(500, MinimumLength = 2)]
         internal Location ThisLocation { get => thisLocation; set => thisLocation = value; }
         internal Product Product { get => product; set => product = value; }
         internal Customer Customer { get => customer; set => customer = value; }

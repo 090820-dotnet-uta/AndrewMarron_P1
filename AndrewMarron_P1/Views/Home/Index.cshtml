@@ -4,6 +4,48 @@
 
 <div class="text-center">
     @*<h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
-    <p>"AAA"</p>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+    <div class="borderdiv">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center container">
+                <div>
+                    @{
+                        string cartCountStr = $"{ViewData["cartcount"]} items in cart";
+                    }
+                    <p>Check Cart Contents (@cartCountStr)</p>
+                    <a class="btn btn-primary" asp-area="" asp-action="Cart">View Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="borderdiv">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center container">
+                <div>
+                    <p>Browse Store Locations</p>
+                    <a class="btn btn-primary" asp-area="" asp-action="Locations">Browse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="borderdiv">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center container">
+                <div>
+                    <p>View Your Order History</p>
+                    <a class="btn btn-primary" asp-area="" asp-action="History">Order History</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="borderdiv">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center container">
+                <div>
+                    <p>Log Out / Switch Accounts</p>
+                    <a class="btn btn-primary" asp-area="" asp-action="LogOut">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
