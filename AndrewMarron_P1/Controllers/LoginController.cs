@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using RevatureP1.Models;
 
@@ -31,24 +32,38 @@ namespace RevatureP1.Controllers
             return View();
         }
 
-        public IActionResult Login(string usernamein, string passwordin)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Username, Password")] LoginViewModel loginInfo)
+        //public IActionResult Login(string usernamein, string passwordin)
         {
-            var foundCustomers = from thisTableItem in _context.Customers
-                                 where thisTableItem.UserName == usernamein
-                                 select thisTableItem;
-            if(foundCustomers.Count() == 1)
+            var thisCustomer = await _context.Customers
+                .FirstOrDefaultAsync(m => m.UserName == loginInfo.Username);
+            if (thisCustomer != null)
             {
-                Customer thisCustomer = foundCustomers.First();
-                if(thisCustomer.Password == passwordin)
+                if (thisCustomer.Password == loginInfo.Password)
                 {
                     _cache.Set("thisCustomer", thisCustomer);
                     return Redirect("/");
                 }
             }
-            else if(foundCustomers.Count() > 1)
-            {
-                System.Diagnostics.Debug.WriteLine("Error: Multiple customers with same name");
-            }
+            //var foundCustomers = from thisTableItem in _context.Customers
+            //                     where thisTableItem.UserName == loginInfo.Username
+            //                     select thisTableItem;
+            //if(foundCustomers.Count() == 1)
+            //{
+            //    Customer thisCustomer = foundCustomers.First();
+            //    if(thisCustomer.Password == loginInfo.Password)
+            //    {
+            //        _cache.Set("thisCustomer", thisCustomer);
+            //        return Redirect("/");
+            //    }
+            //}
+            //else if(foundCustomers.Count() > 1)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("Error: Multiple customers with same name");
+            //}
+
             //System.Diagnostics.Debug.WriteLine(_cache.Get("TestCacheVar"));
             //return View();
             //_cache.Set("IsLoggedIn", "true");
