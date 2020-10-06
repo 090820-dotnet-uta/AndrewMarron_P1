@@ -27,7 +27,7 @@
                             </li>
                             <li class="nav-item">
                                 @{
-                                    if ((int)ViewData["cartcount"] == 0)
+                                    if (ViewData["cartcount"] == null || (int)ViewData["cartcount"] == 0)
                                     {
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart">Cart</a>
                                     }
