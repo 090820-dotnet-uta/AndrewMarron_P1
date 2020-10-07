@@ -13,12 +13,18 @@ namespace RevatureP1.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// This is the controller for views after logging in
+        /// </summary>
         private readonly ILogger<HomeController> _logger;
         private IMemoryCache _cache;
         private DbContextClass _context;
 
         public HomeController(ILogger<HomeController> logger, IMemoryCache cache, DbContextClass context)
         {
+            /// <summary>
+            /// The constructor
+            /// </summary>
             _logger = logger;
             _cache = UtilMethods.InitializeCacheIfNeeded(cache);
             _context = context;
@@ -26,6 +32,9 @@ namespace RevatureP1.Controllers
 
         public IActionResult Index()
         {
+            /// <summary>
+            /// The main user menu
+            /// </summary>
             if (!UtilMethods.LogInCheck(_cache))
             {
                 return Redirect("/Login");
@@ -36,6 +45,9 @@ namespace RevatureP1.Controllers
 
         public IActionResult Cart()
         {
+            /// <summary>
+            /// The cart page
+            /// </summary>
             if (!UtilMethods.LogInCheck(_cache))
             {
                 return Redirect("/Login");
@@ -47,11 +59,18 @@ namespace RevatureP1.Controllers
 
         public async Task<IActionResult> Locations()
         {
+            /// <summary>
+            /// The store list page
+            /// </summary>
             ViewData["cartcount"] = UtilMethods.GetCartCount(_cache);
             return View(await _context.Locations.ToListAsync());
         }
+
         public async Task<IActionResult> LocationDetails(int? id)
         {
+            /// <summary>
+            /// The store stocks page
+            /// </summary>
             if (id == null)
             {
                 return NotFound();
@@ -81,8 +100,48 @@ namespace RevatureP1.Controllers
             return View(theseStockItemViewModels);
         }
 
+        public async Task<IActionResult> StoreHistory(int? id)
+        {
+            /// <summary>
+            /// The store order history page
+            /// </summary>
+            if (id == null)
+            {
+                return NotFound();
+            }
+            int thisLocId = (int)id;
+            if (!UtilMethods.LogInCheck(_cache))
+            {
+                return Redirect("/Login");
+            }
+            var thisLocation = await _context.Locations
+                .FirstOrDefaultAsync(m => m.LocationId == thisLocId);
+            if (thisLocation == null)
+            {
+                return NotFound();
+            }
+            var foundOrderItems = from thisTableItem in _context.OrderItems
+                                  where thisTableItem.LocationId == thisLocation.LocationId
+                                  select thisTableItem;
+            List<OrderItem> theseOrderItems = foundOrderItems.ToList<OrderItem>();
+            List<OrderItemViewModel> theseOrderItemViewModels = new List<OrderItemViewModel>();
+            foreach (OrderItem thisOrderItem in theseOrderItems)
+            {
+                Customer thisCustomer = await _context.Customers
+                    .FirstOrDefaultAsync(m => m.CustomerId == thisOrderItem.CustomerId);
+                OrderItemViewModel thisOrderItemViewModel = UtilMethods.BuildOrderItemViewModelFromCustOrder(thisCustomer, thisOrderItem, _context);
+                theseOrderItemViewModels.Add(thisOrderItemViewModel);
+            }
+            ViewData["storeaddress"] = thisLocation.LocationAddress;
+            ViewData["cartcount"] = UtilMethods.GetCartCount(_cache);
+            return View(theseOrderItemViewModels);
+        }
+
         public async Task<IActionResult> ProductSelect(string locid = "", string prodid = "", string ovarload = "false")
         {
+            /// <summary>
+            /// The specific product selection page
+            /// </summary>
             if (!UtilMethods.LogInCheck(_cache))
             {
                 return Redirect("/Login");
@@ -92,7 +151,7 @@ namespace RevatureP1.Controllers
                 return Redirect("/Locations");
             }
             int thisLocId = int.Parse(locid);
-            if (locid == "")
+            if (prodid == "")
             {
                 return Redirect($"/LocationDetails/{thisLocId}");
             }
@@ -119,6 +178,9 @@ namespace RevatureP1.Controllers
 
         public IActionResult AddToCart(int countin)
         {
+            /// <summary>
+            /// Adds order item view model to cart
+            /// </summary>
             Customer thisCustomer = (Customer)_cache.Get("thisCustomer");
             StockItemViewModel vSt = (StockItemViewModel)_cache.Get("currentViewedStock");
             if (!UtilMethods.CheckProductCount(vSt.LocationId, vSt.ProductId, countin, _context))
@@ -145,6 +207,9 @@ namespace RevatureP1.Controllers
 
         public async Task<IActionResult> CheckoutCart()
         {
+            /// <summary>
+            /// Adds cart items to orderitems db then empties cart
+            /// </summary>
             List<OrderItemViewModel> CurrentCart = (List<OrderItemViewModel>)_cache.Get("customerCart");
             foreach (OrderItemViewModel thisOIVM in CurrentCart)
             {
@@ -157,10 +222,7 @@ namespace RevatureP1.Controllers
                     thisOIVM.OrderCount
                     );
                 _context.Add(thisOrderItem);
-                StockItem targetStockItem = _context.StockItems
-                    .Where(x => x.LocationId == thisOrderItem.LocationId)
-                    .Where(x => x.ProductId == thisOrderItem.ProductId).FirstOrDefault();
-                targetStockItem.StockCount = targetStockItem.StockCount - thisOrderItem.OrderCount;
+                _context = UtilMethods.DecrementStockItem(thisOrderItem, _context);
             }
             await _context.SaveChangesAsync();
             System.Diagnostics.Debug.WriteLine($"Orders updated");
@@ -168,14 +230,36 @@ namespace RevatureP1.Controllers
             return Redirect("/Home/History");
         }
 
+        public IActionResult DeleteCartItem(int? id)
+        {
+            /// <summary>
+            /// Deletes a specific cart item
+            /// </summary>
+            if (id == null)
+            {
+                return Redirect("/Home/Cart");
+            }
+            int targetInc = (int)id;
+            List<OrderItemViewModel> thisCart = (List<OrderItemViewModel>)_cache.Get("customerCart");
+            thisCart.RemoveAt(targetInc);
+            _cache.Set("customerCart", thisCart);
+            return Redirect("/Home/Cart");
+        }
+
         public IActionResult ClearCart()
         {
+            /// <summary>
+            /// Empties the cart
+            /// </summary>
             _cache.Set("customerCart", new List<OrderItemViewModel>());
             return Redirect("/Home/Cart");
         }
 
         public IActionResult History()
         {
+            /// <summary>
+            /// User order history page
+            /// </summary>
             if (!UtilMethods.LogInCheck(_cache))
             {
                 return Redirect("/Login");
@@ -197,12 +281,18 @@ namespace RevatureP1.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            /// <summary>
+            /// Error message page
+            /// </summary>
             ViewData["cartcount"] = UtilMethods.GetCartCount(_cache);
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         public IActionResult LogOut()
         {
+            /// <summary>
+            /// Logs the user out and resets cache
+            /// </summary>
             _cache.Set("doLogout", "true");
             UtilMethods.InitializeCacheIfNeeded(_cache);
             return Redirect("/Login");

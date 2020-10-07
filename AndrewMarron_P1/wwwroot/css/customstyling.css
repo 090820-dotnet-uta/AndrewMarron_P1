@@ -7,4 +7,31 @@
     border-style: solid;
     margin: 15px;
     padding: 10px;
+    background: #ffffef;
+}
+
+.modal-dialog .modal-content {
+    background: #ffffef;
+}
+
+body {
+    background: #ffffcc;
+}
+
+nav {
+    background: #ffffef;
+    border-color: black;
+    border-width: 1px;
+}
+
+.nav-link {
+    font-weight: bold;
+}
+
+.navbar-brand {
+    border-width: 1px;
+    border-style: solid;
+    background: #ffff4d;
+    font-weight: bolder;
+    padding: 5px;
 }

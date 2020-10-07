@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RevatureP1.Models // A product orderd by a customer from a location
 {
-    public class OrderItemViewModel
+    public class OrderItemViewModel : OrderInterface
     {
         /// <summary>
         /// A version of StockItem for outputting to the view (with properties from other tables added)

@@ -179,3 +179,4 @@ C:\Users\ajmarron\Desktop\Revature\repoDev\AndrewMarron\RevatureP1\obj\Debug\net
 C:\Users\ajmarron\Desktop\Revature\repoDev\AndrewMarron\RevatureP1\obj\Debug\netcoreapp3.1\Razor\Views\Home\LocationDetails.cshtml.g.cs
 C:\Users\ajmarron\Desktop\Revature\repoDev\AndrewMarron\RevatureP1\obj\Debug\netcoreapp3.1\Razor\Views\Login\Register.cshtml.g.cs
 C:\Users\ajmarron\Desktop\Revature\repoDev\AndrewMarron\RevatureP1\obj\Debug\netcoreapp3.1\Razor\Views\Home\ProductSelect.cshtml.g.cs
+C:\Users\ajmarron\Desktop\Revature\repoDev\AndrewMarron\RevatureP1\obj\Debug\netcoreapp3.1\Razor\Views\Home\StoreHistory.cshtml.g.cs

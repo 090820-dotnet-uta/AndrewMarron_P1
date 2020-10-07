@@ -11,6 +11,9 @@ namespace RevatureP1.Models
 {
     public static class TestDbMaker
     {
+        /// <summary>
+        /// Stores a method for initializing the test database
+        /// </summary>
         public static DbContextClass PopulateTestDb(DbContextClass context)
         {
             ///<summary>
@@ -55,14 +58,14 @@ namespace RevatureP1.Models
             System.Diagnostics.Debug.WriteLine("Success");
             System.Diagnostics.Debug.WriteLine("Adding StockItems");
             // StockItem(int LocationIdIn, int ProductIdIn, int StockCountIn, bool IsBundleIn, float DiscountPercentIn)
-            context.StockItems.Add(new StockItem(1, 1, 110, true, 20));
-            context.StockItems.Add(new StockItem(1, 2, 0, true, 0));
-            context.StockItems.Add(new StockItem(1, 4, 130, true, 0));
-            context.StockItems.Add(new StockItem(2, 2, 50, true, 0));
-            context.StockItems.Add(new StockItem(2, 3, 45, true, 0));
-            context.StockItems.Add(new StockItem(2, 4, 40, true, 0));
-            context.StockItems.Add(new StockItem(3, 1, 2000, true, 50));
-            context.StockItems.Add(new StockItem(3, 2, 1000, true, 50));
+            context.StockItems.Add(new StockItem(1, 1, 110, false, 20));
+            context.StockItems.Add(new StockItem(1, 2, 0, false, 0));
+            context.StockItems.Add(new StockItem(1, 4, 130, false, 0));
+            context.StockItems.Add(new StockItem(2, 2, 50, false, 0));
+            context.StockItems.Add(new StockItem(2, 3, 45, false, 0));
+            context.StockItems.Add(new StockItem(2, 4, 40, false, 0));
+            context.StockItems.Add(new StockItem(3, 1, 2000, false, 50));
+            context.StockItems.Add(new StockItem(3, 2, 1000, false, 50));
             context.SaveChanges();
             System.Diagnostics.Debug.WriteLine("Success");
             System.Diagnostics.Debug.WriteLine("Adding OrderItems");

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RevatureP1.Models // A product orderd by a customer from a location
 {
-    public class OrderItem
+    public class OrderItem : OrderInterface
     {
         /// <summary>
         /// This object stores information for each time a product (or several of a product) is ordered

@@ -1,11 +1,11 @@
-﻿@model IEnumerable<RevatureP1.Models.StockItemViewModel>
+﻿@model IEnumerable<RevatureP1.Models.OrderItemViewModel>
 @*
-    The store products list page
+    The store order history page
 *@
-@{ ViewData["Title"] = "Location Details"; }
+@{ ViewData["Title"] = "Store History"; }
 
 <div class="borderdiv">
-    <h1>Items in stock</h1>
+    <h1>Order History for @ViewData["storeaddress"]</h1>
 
     @*<p>
             <a asp-action="Create">Create New</a>
@@ -18,13 +18,16 @@
                     @*@Html.DisplayNameFor(model => model.ProductName)*@
                 </th>
                 <th>
-                    Number In Stock
+                    Number Ordered
                 </th>
                 <th>
-                    Sales
+                    Total Price
                 </th>
                 <th>
-                    Price
+                    Ordered By
+                </th>
+                <th>
+                    Ordered On
                 </th>
                 <th></th>
             </tr>
@@ -37,25 +40,23 @@
                         @Html.DisplayFor(modelItem => item.ProductName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StockCount)
+                        @Html.DisplayFor(modelItem => item.OrderCount)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SaleString)
+                        $@Html.DisplayFor(modelItem => item.TotalPriceWhenOrdered)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PriceString)
+                        @Html.DisplayFor(modelItem => item.CustomerName)
                     </td>
                     <td>
-                        @{
-                            Dictionary<string, string> paramPass = new Dictionary<string, string>();
-                            paramPass.Add("locid", $"{ item.LocationId}");
-                            paramPass.Add("prodid", $"{ item.ProductId}");
-                        }
-                        <a class="btn btn-primary" asp-action="ProductSelect" asp-all-route-data=@paramPass>Product Details</a>
+                        @Html.DisplayFor(modelItem => item.DateOrdered)
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    @{ if (Model.Count() == 0)
+        {
+            <h3>No Prior orders</h3> } }
     <a class="btn btn-primary" href="javascript:history.go(-1)">Back</a>
 </div>

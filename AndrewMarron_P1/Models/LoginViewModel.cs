@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RevatureP1.Models
 {
+    /// <summary>
+    /// Location data plus associated data for user output
+    /// </summary>
     public class LoginViewModel
     {
         private string username;

@@ -1,4 +1,7 @@
 ﻿@model RevatureP1.Models.LoginViewModel
+@*
+    The login page
+*@
 @{
     ViewData["Title"] = "Login Page";
     ViewData["IsLoginPage"] = "true";
@@ -6,7 +9,7 @@
 
 <div class="text-center">
     <div class="borderdiv">
-        <h1 class="display-4">Login</h1>
+        <h1>Login</h1>
         @if ((string)ViewData["warn"] == "credinvalid")
         {
             <p class="warningmessage">Username or Password not not found; try again or register a new account</p>
